@@ -1,0 +1,314 @@
+$golden-brown: #917330;
+$black-color: #000000;
+$white-color: #ffffff;
+
+$forest-green: rgb(31, 62, 39);
+$sky-gray-blue: #829ba3;
+$sand-beige: #e2c98a;
+$charcoal: rgb(33, 27, 33);
+
+$light-color: #f9f6ee;
+
+$transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+
+.contact-page {
+  width: 100%;
+  position: relative;
+  background: $light-color;
+
+  .hero {
+    width: 100%;
+    height: 100%;
+    min-height: 60vh !important;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.96;
+      background: linear-gradient(
+        290deg,
+        $sky-gray-blue 0%,
+        $golden-brown 50%,
+        $sky-gray-blue 100%
+      );
+    }
+
+    .content {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      h1 {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: $white-color;
+        user-select: none;
+      }
+    }
+  }
+
+  .contacts-sec {
+    width: 100%;
+    padding: 6rem 0;
+    position: relative;
+    background: $white-color;
+
+    @media (max-width: 980px) {
+      padding: 3rem 0;
+    }
+
+    .content {
+      width: 100%;
+      position: relative;
+      gap: 3rem;
+      display: flex;
+      align-items: start;
+
+      .contact-card {
+        flex: 0.4;
+        margin-top: -12rem;
+        position: sticky;
+        padding: 3rem;
+        top: 6rem;
+        background: $white-color;
+
+        .div {
+          width: 100%;
+          gap: 2rem;
+          display: flex;
+          padding: 2rem 0;
+          position: relative;
+          flex-direction: column;
+
+          h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: $white-color;
+          }
+
+          .phone-call {
+            gap: 1rem;
+            display: flex;
+            flex-direction: column;
+
+            h3 {
+              color: $light-color;
+              font-size: 1.3rem;
+              font-weight: 600;
+              margin-bottom: 0.4rem;
+            }
+
+            p {
+              color: $white-color;
+              font-size: 1rem;
+              opacity: 0.7;
+              margin-bottom: 1rem;
+            }
+
+            ul {
+              gap: 1rem;
+              display: flex;
+              flex-direction: column;
+
+              a {
+                gap: 0.4rem;
+                display: flex;
+                align-items: center;
+                font-size: 1.1rem;
+                font-weight: 500;
+                color: $white-color;
+
+                .icon {
+                  padding: 0.6rem;
+                  border-radius: 0.6rem;
+                  background: $forest-green;
+                }
+
+                &.email {
+                  font-family: "Syne";
+                }
+
+                &:hover {
+                  color: $forest-green;
+
+                  .icon {
+                    background: $sky-gray-blue;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: -0.3rem;
+          top: 0.3rem;
+          background: $golden-brown;
+        }
+      }
+
+      .contact-descr {
+        flex: 0.6;
+        position: relative;
+
+        .form {
+          width: 100%;
+          position: relative;
+
+          h2 {
+            gap: 0.3rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: $charcoal;
+            margin-bottom: 1rem;
+
+            i {
+              color: $golden-brown;
+            }
+          }
+
+          p {
+            font-size: 1rem;
+            color: $charcoal;
+            opacity: 0.6;
+            margin-bottom: 2rem;
+          }
+
+          form {
+            width: 100%;
+            position: relative;
+            gap: 1rem;
+            display: flex;
+            flex-direction: column;
+
+            .input {
+              width: 100%;
+              position: relative;
+
+              input {
+                width: 100%;
+                height: 3rem;
+                font-size: 1rem;
+                font-weight: 500;
+                color: $charcoal;
+                padding: 1rem;
+                border-radius: 0.6rem;
+                transition: $transition;
+                box-shadow: 0 0 0 1px rgba($sky-gray-blue, 0.3);
+
+                &:hover {
+                  box-shadow: 0 0 0 1px $sky-gray-blue;
+                }
+
+                &:focus {
+                  box-shadow: 0 0 0 0.2rem $golden-brown;
+                  color: $forest-green;
+                }
+              }
+
+              input[type="text"],
+              input[type="email"] {
+                font-family: "Syne", sans-serif;
+              }
+            }
+
+            .message {
+              position: relative;
+              width: 100%;
+
+              textarea {
+                width: 100%;
+                height: 8rem;
+                resize: none;
+                font-size: 1rem;
+                font-weight: 500;
+                color: $charcoal;
+                padding: 1rem;
+                border-radius: 0.6rem;
+                transition: $transition;
+                font-family: "Syne";
+                box-shadow: 0 0 0 1px rgba($sky-gray-blue, 0.3);
+
+                &:hover {
+                  box-shadow: 0 0 0 1px $sky-gray-blue;
+                }
+
+                &:focus {
+                  box-shadow: 0 0 0 0.2rem $golden-brown;
+                  color: $forest-green;
+                }
+              }
+            }
+
+            .form-btn {
+              position: relative;
+
+              button {
+                padding: 1rem;
+                color: $white-color;
+                font-family: "Syne";
+                font-weight: 500;
+                font-size: 1.1rem;
+                border-radius: 0.6rem;
+                background: $golden-brown;
+                transition: $transition;
+
+                &:hover {
+                  cursor: pointer;
+                  background: $forest-green;
+                  box-shadow: 0 0 0 0.2rem rgba($sky-gray-blue, 0.3);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      @media (max-width: 980px) {
+        flex-direction: column;
+
+        .contact-card {
+          position: relative;
+          margin-top: 0;
+          top: auto;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .map-view {
+    width: 100%;
+    position: relative;
+    padding-bottom: 1rem;
+    background: $light-color;
+
+    .content {
+      width: 100%;
+      height: 450px;
+      position: relative;
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        border: 0;
+        outline: none;
+      }
+    }
+  }
+}
