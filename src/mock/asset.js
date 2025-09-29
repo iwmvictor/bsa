@@ -8,6 +8,8 @@ const footer1Bg =
 
 import carPlaceholder from "/images/img/car.svg";
 
+import iwm from "/images/img/iwm.png";
+
 import serviceImg1 from "/images/img/collection.avif";
 import serviceImg2 from "/images/img/cars.webp";
 

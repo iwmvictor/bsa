@@ -189,11 +189,20 @@ const Homepage = () => {
                 <ul>
                   {servicesList.map((service, index) => (
                     <li key={index}>
-                      <Link
+                      {/* <Link
                         to={`/service/${service.title
                           .toLowerCase()
                           .replace(/\s+/g, "-")}`}
                       >
+                        <span>
+                          <span className="count">{service.count}</span>
+                          <span className="title">{service.title}</span>
+                        </span>
+                        <span className="icon">
+                          <FaArrowRightLong />
+                        </span>
+                      </Link> */}
+                      <Link to={"/contact"}>
                         <span>
                           <span className="count">{service.count}</span>
                           <span className="title">{service.title}</span>

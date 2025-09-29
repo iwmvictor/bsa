@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="container">
           <div className="content">
             <div className="cta ">
-              <img src={assets.serviceImg2} alt=""  loading="lazy" />
+              <img src={assets.serviceImg2} alt="" loading="lazy" />
               <div className="bg gradient"></div>
               <div className="text">
                 <h2>Ready to Go?</h2>
@@ -34,23 +34,35 @@ const Footer = () => {
                   </p>
                   <ul>
                     <li>
-                      <NavLink>
+                      <NavLink
+                        to={`tel:${companyInfo.phone?.mtn}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <span className="icon">
                           <MdOutlineCall />
                         </span>
-                        <span>{formatPhoneNum(companyInfo.phoneMtn)}</span>
+                        <span>{formatPhoneNum(companyInfo.phone?.mtn)}</span>
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink>
+                      <NavLink
+                        to={`tel:${companyInfo.phone?.airtel}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <span className="icon">
                           <MdOutlineCall />
                         </span>
-                        <span>{formatPhoneNum(companyInfo.phoneAirtel)}</span>
+                        <span>{formatPhoneNum(companyInfo.phone?.airtel)}</span>
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink>
+                      <NavLink
+                        to={`mailto:${companyInfo?.email || companyInfo.gmail}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <span className="icon">
                           <LuMail />
                         </span>
@@ -58,11 +70,15 @@ const Footer = () => {
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink>
+                      <NavLink
+                        to={companyInfo.address.mapLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <span className="icon">
                           <IoMdLocate />
                         </span>
-                        <span>{companyInfo?.email || companyInfo.gmail}</span>
+                        <span>{companyInfo?.address?.title}</span>
                       </NavLink>
                     </li>
                   </ul>
