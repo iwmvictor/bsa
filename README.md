@@ -14,32 +14,6 @@ Reliable car rental services in Rwanda, Kigali, and East Africa. Affordable self
 
 [Visit Bright Safaris Africa](https://brightsafaris.vercel.app/)
 
-## Getting Started
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/your-username/bright-safaris.git
-   cd bright-safaris
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-   npm install
-   ```
-
-3. **Run the development server:**
-
-   ```bash
-   npm run dev
-   ```
-
-4. **Build for production:**
-   ```bash
-   npm run build
-   ```
-
 ## Project Structure
 
 - `/public` – Static assets (images, manifest, favicon)
@@ -65,6 +39,10 @@ Reliable car rental services in Rwanda, Kigali, and East Africa. Affordable self
 - **Phone:** +250789829879, +250735666013
 - **Location:** Kigali, Rwanda
 
+## Developer
+
+_Designed and developed by [@iwmvictor](https://iwmvictor.netlify.app)_
+
 ---
 
-© Bright Safaris Africa
+© Bright Safaris Africa 2025
