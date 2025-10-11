@@ -135,7 +135,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
                 }
 
                 &.email {
-                  font-family: "Syne";
+                  font-family: "Inter";
                 }
 
                 &:hover {
@@ -222,7 +222,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
 
               input[type="text"],
               input[type="email"] {
-                font-family: "Syne", sans-serif;
+                font-family: "Inter", sans-serif;
               }
             }
 
@@ -240,7 +240,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
                 padding: 1rem;
                 border-radius: 0.6rem;
                 transition: $transition;
-                font-family: "Syne";
+                font-family: "Inter";
                 box-shadow: 0 0 0 1px rgba($sky-gray-blue, 0.3);
 
                 &:hover {
@@ -260,7 +260,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
               button {
                 padding: 1rem;
                 color: $white-color;
-                font-family: "Syne";
+                font-family: "Inter";
                 font-weight: 500;
                 font-size: 1.1rem;
                 border-radius: 0.6rem;

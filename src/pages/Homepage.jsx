@@ -19,7 +19,7 @@ const calcAvgRating = (reviews) => {
 const servicesList = [
   {
     count: "01",
-    title: "Car Rentals",
+    title: "Car Rental",
     descr: "Explore our wide range of rental cars.",
   },
   {
@@ -27,13 +27,13 @@ const servicesList = [
     title: "Airport Transfers",
     descr: "Reliable and comfortable airport transfer services.",
   },
+  // {
+  //   count: "03",
+  //   title: "City Tours",
+  //   descr: "Discover the city with our guided tours.",
+  // },
   {
     count: "03",
-    title: "City Tours",
-    descr: "Discover the city with our guided tours.",
-  },
-  {
-    count: "04",
     title: "Accommodation",
     descr: "Comfortable stays at the best locations.",
   },
@@ -189,19 +189,6 @@ const Homepage = () => {
                 <ul>
                   {servicesList.map((service, index) => (
                     <li key={index}>
-                      {/* <Link
-                        to={`/service/${service.title
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`}
-                      >
-                        <span>
-                          <span className="count">{service.count}</span>
-                          <span className="title">{service.title}</span>
-                        </span>
-                        <span className="icon">
-                          <FaArrowRightLong />
-                        </span>
-                      </Link> */}
                       <Link to={"/contact"}>
                         <span>
                           <span className="count">{service.count}</span>

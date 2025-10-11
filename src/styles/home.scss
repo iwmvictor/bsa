@@ -92,7 +92,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         opacity: 0.9;
         font-size: 1rem;
         color: $white-color;
-        font-family: "Syne";
+        font-family: "Inter";
         margin-bottom: 2rem;
       }
 
@@ -329,6 +329,18 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         .left {
           flex: 0.4;
           position: relative;
+
+          .review-card {
+            p,
+            .user span {
+              opacity: 0.8;
+              color: $light-color;
+            }
+
+            .user{
+              border-color: transparent;
+            }
+          }
         }
 
         .right {
@@ -350,27 +362,29 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
 
           h1 {
             font-size: 1.5rem;
-            color: $black-color;
+            color: $white-color;
           }
 
           p {
-            color: $charcoal;
+            color: $light-color;
             font-size: 1rem;
           }
 
           a {
             padding: 1rem;
+            margin-top: 1rem;
             width: fit-content;
             font-size: 1rem;
             font-weight: 500;
-            color: $white-color;
+            color: $golden-brown;
             border-radius: 1rem;
             position: relative;
             text-transform: capitalize;
-            background: $forest-green;
+            background: $light-color;
             transition: $transition;
 
             &:hover {
+              color: $white-color;
               background: rgba($sky-gray-blue, 0.3);
               box-shadow: 0 0 0 0.2rem rgba($sky-gray-blue, 0.3);
             }
@@ -415,13 +429,13 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             .num {
               font-size: 2rem;
               font-weight: 900;
-              color: $black-color;
+              color: $white-color;
             }
 
             .label {
               font-size: 0.8rem;
               font-weight: 400;
-              color: $charcoal;
+              color: $light-color;
             }
           }
         }

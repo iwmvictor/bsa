@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="container">
           <div className="content">
             <div className="cta ">
-              <img src={assets.serviceImg2} alt="" loading="lazy" />
+              <img src={assets?.serviceImg2} alt="" loading="lazy" />
               <div className="bg gradient"></div>
               <div className="text">
                 <h2>Ready to Go?</h2>

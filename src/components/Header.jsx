@@ -15,7 +15,7 @@ const Header = () => {
   const handleCheckboxChange = (event) => {
     setMenuModal(event.target.checked); // Update the modal state when checkbox changes
   };
-
+ 
   return (
     <>
       <div className="header">

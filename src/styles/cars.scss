@@ -143,7 +143,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 400;
             padding-left: 2.6rem;
             border-radius: 0.6rem;
-            font-family: "Syne", sans-serif;
+            font-family: "DM Sans", sans-serif;
             background: $light-color;
             transition: $transition;
 
@@ -206,7 +206,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             }
 
             label {
-              font-family: "Syne", sans-serif;
+              font-family: "DM Sans", sans-serif;
               color: $sky-gray-blue;
               font-weight: 500;
               font-size: 1rem;
@@ -488,7 +488,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
           font-size: 1rem;
           font-weight: 500;
           color: $golden-brown;
-          font-family: "Syne";
+          font-family: "DM Sans";
         }
 
         .q-right {
@@ -732,14 +732,14 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
                   opacity: 0.4;
                   font-size: 1.1rem;
 
-                  font-family: "Syne", sans-serif !important;
+                  font-family: "DM Sans", sans-serif !important;
                 }
                 .val {
                   flex: 0.6;
                   font-weight: 600;
                   font-size: 1.1rem;
                   color: $forest-green;
-                  font-family: "Syne", sans-serif !important;
+                  font-family: "DM Sans", sans-serif !important;
                 }
               }
             }
@@ -826,7 +826,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
                 resize: none;
                 border-radius: 0.6rem;
                 transition: $transition;
-                font-family: "Syne", sans-serif;
+                font-family: "DM Sans", sans-serif;
                 box-shadow: 0 0 0 1px rgba($sky-gray-blue, 0.3);
               }
 
@@ -906,7 +906,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
                 border-radius: 0.6rem;
                 background: $golden-brown;
                 transition: $transition;
-                font-family: "Syne", sans-serif;
+                font-family: "DM Sans", sans-serif;
 
                 &:hover {
                   cursor: pointer;
