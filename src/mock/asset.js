@@ -13,6 +13,8 @@ import iwm from "/images/img/iwm.png";
 import serviceImg1 from "/images/img/collection.avif";
 import serviceImg2 from "/images/img/cars.webp";
 
+import uploadIcon from "/icons/upload.svg";
+
 export const assets = {
   heroBg,
 
@@ -34,6 +36,7 @@ import { showroom } from "./cars";
 
 export const ikons = {
   igallery,
+  uploadIcon,
 };
 
 const galleryImages = showroom.flatMap((car) => car.gallery);

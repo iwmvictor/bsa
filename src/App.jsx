@@ -11,6 +11,15 @@ import CommingSoonPage from "./pages/CommingSoon";
 import ScrollToTop from "./components/ScrollToTop";
 import { useEffect } from "react";
 import drawBrightSafaris from "./mock/ACIIArt";
+import RegisterPage from "./auth/Register";
+import LoginPage from "./auth/Login";
+import { Toaster } from "react-hot-toast";
+import DashboardLayout from "./admin/component/Layout";
+import DashboardOverview from "./admin/Overview";
+import DashboardCars from "./admin/Cars";
+import ProtectedRoute from "./auth/ProtectedRoute";
+import NewCarPage from "./admin/NewCar";
+import DashboardBookings from "./admin/Bookings";
 
 function App() {
   useEffect(() => {
@@ -19,6 +28,26 @@ function App() {
 
   return (
     <>
+      <Toaster
+        position="top-center"
+        containerStyle={{
+          zIndex: 999999999,
+        }}
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: "#333",
+            color: "#fff",
+            fontSize: "0.95rem",
+          },
+          success: {
+            iconTheme: {
+              primary: "#4caf50",
+              secondary: "#fff",
+            },
+          },
+        }}
+      />
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
@@ -33,7 +62,21 @@ function App() {
 
             {/* <Route path="next" element={<CommingSoonPage />} /> */}
 
-            <Route path="*" element={<ErrorPage />} />
+            {/* <Route path="*" element={<ErrorPage />} /> */}
+          </Route>
+
+          <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth" element={<LoginPage />} />
+          <Route path="/auth/register" element={<RegisterPage />} />
+
+          <Route path="admin" element={<ProtectedRoute />}>
+            <Route element={<DashboardLayout />}>
+              <Route index element={<DashboardOverview />} />
+              <Route path="cars" element={<DashboardCars />} />
+              <Route path="cars/:id/edit" element={<NewCarPage />} />
+              <Route path="cars/new" element={<NewCarPage />} />
+              <Route path="bookings" element={<DashboardBookings />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

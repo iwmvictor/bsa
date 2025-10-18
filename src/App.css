@@ -2,12 +2,9 @@
   --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
 html {
   scroll-behavior: smooth;
 }
-
-
 
 ::selection {
   background: #917330;
@@ -224,4 +221,34 @@ li {
   height: 100%;
   opacity: 0.8;
   background: linear-gradient(290deg, #829ba3 0%, #917330 50%, #829ba3 100%);
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  height: 6rem;
+  aspect-ratio: 1;
+  border-radius: 1rem;
+  --c: no-repeat linear-gradient(#917330 0 0);
+  background: var(--c), var(--c), var(--c), var(--c);
+  background-size: 33.4% 33.4%;
+  animation: l7 1.5s infinite linear;
+}
+@keyframes l7 {
+  0%,
+  5% {
+    background-position: 0 0, 50% 0, 0 50%, 50% 50%;
+  }
+  25% {
+    background-position: 0 0, 100% 0, 0 100%, 50% 50%;
+  }
+  50% {
+    background-position: 50% 0, 100% 0, 0 100%, 0 50%;
+  }
+  75% {
+    background-position: 50% 0, 100% 50%, 0 100%, 0 0;
+  }
+  95%,
+  100% {
+    background-position: 50% 0, 50% 50%, 0 50%, 0 0;
+  }
 }
