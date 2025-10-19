@@ -1,48 +1,51 @@
 # Bright Safaris Africa
 
-Reliable car rental services in Rwanda, Kigali, and East Africa. Affordable self-drive and chauffeured vehicles with 24/7 support.
+A car rental company based in kigali, specializing in **car rental**, **airport transfers**, **accommodations**
+<br> The website primarily serves as for _car listing_, _car booking_, and user being able to contact the company whenever he needs to.
 
-## Features
+# Features
 
-- Car rental and hire in Rwanda, Kigali, and East Africa
-- Self-drive and chauffeur options
-- 4x4s, SUVs, and airport pickups
-- 24/7 customer support
-- Modern, responsive web app
+### • Car Listing
 
-## Demo
+Admin is able to list and manage cars listed on platform (_Add new, delete, edit_)
 
-[Visit Bright Safaris Africa](https://brightsafaris.vercel.app/)
+### • Car Booking
 
-## Project Structure
+Users are able to browse a car, and book any..
 
-- `/public` – Static assets (images, manifest, favicon)
-- `/src` – Main application source code
-- `/src/main.jsx` – App entry point
+### • Contact
 
-## Tech Stack
+Users/clients are able to send messages to the admin
 
-- HTML5, CSS3
-- JavaScript (React)
-- Vite (build tool)
-- Google Fonts
+# ADMIN
 
-## SEO & Social
+- Manage cars
+- Manage bookings
+- Car Listing
 
-- Optimized meta tags for search engines and social sharing
-- Open Graph and Twitter Card support
-- Structured data (JSON-LD) for CarRental business
+# CLIENTS
 
-## Contact
+- Browse cars
+- Book a car
+- Send messages
 
-- **Website:** [brightsafaris.vercel.app](https://brightsafaris.vercel.app/)
-- **Phone:** +250789829879, +250735666013
-- **Location:** Kigali, Rwanda
+# Live preview
 
-## Developer
+For the live preview, [view it live](https://brightsafari.vercel.app)
 
-_Designed and developed by [@iwmvictor](https://iwmvictor.netlify.app)_
+<br>
+<br>
 
----
+### Dev
 
-© Bright Safaris Africa 2025
+- [Iwmvictor](https://iwmvictor.netlify.app)
+- &copy; 2025 Arkon
+  <br>
+  <br>
+
+## ENV
+
+```
+VITE_API_BASE_URL=******
+VITE_API_AUTH_URL=******
+```
