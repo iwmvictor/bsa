@@ -470,26 +470,39 @@ export function getBrandLogo(brand) {
 const lexusLogo = getBrandLogo(showroom[0].brand); // returns Lexus logo URL
 
 export function generateSlug(car) {
-  return `${car.brand}-${car.model}-${car.carInfo.year}`
+  return `${car.brand}-${car.model}-${car.year}`
     .toLowerCase()
     .replace(/\s+/g, "-");
 }
 
+
 export function priceFormat(amount) {
-  return amount.toLocaleString("en-NG"); // or 'en-US' if you prefer
+  const number = Number(amount);
+  if (isNaN(number)) return "0";
+  return number.toLocaleString("en-NG");
 }
 
-export function isBookedToday(bookedDates) {
+
+// export function isBookedToday(bookedDates) {
+//   const today = new Date();
+
+//   return bookedDates.some((range) => {
+//     const from = new Date(range.from);
+//     const to = new Date(range.to);
+
+//     // Normalize times for comparison
+//     from.setHours(0, 0, 0, 0);
+//     to.setHours(23, 59, 59, 999);
+
+//     return today >= from && today <= to;
+//   });
+// }
+export function isBookedToday(bookedDates = []) {
   const today = new Date();
-
-  return bookedDates.some((range) => {
-    const from = new Date(range.from);
-    const to = new Date(range.to);
-
-    // Normalize times for comparison
-    from.setHours(0, 0, 0, 0);
-    to.setHours(23, 59, 59, 999);
-
-    return today >= from && today <= to;
+  return bookedDates.some(({ from, to }) => {
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    return today >= fromDate && today <= toDate;
   });
 }
+

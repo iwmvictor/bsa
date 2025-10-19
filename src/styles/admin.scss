@@ -17,7 +17,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
 
   .dashboard-content {
     background-color: $light-color;
-    min-height: 100vh;
+    min-height: 90vh;
   }
 }
 
@@ -1106,6 +1106,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         .name {
           display: flex;
           font-size: 1rem;
+          transition: $transition;
           color: rgba($charcoal, 0.6);
 
           h4 {
@@ -1124,7 +1125,8 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         background: $light-color;
 
         &:hover {
-          box-shadow: 0 0 1px 0 rgba($forest-green, 0.3);
+          box-shadow: 0 0 1px 0 rgba($forest-green, 0.9);
+          background: rgba($forest-green, 0.2);
         }
       }
     }
@@ -1468,6 +1470,399 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             color: $white-color;
             background: $golden-brown;
           }
+        }
+      }
+    }
+  }
+}
+
+.admin-inbox {
+  width: 100%;
+  height: 100%;
+  padding: 2rem 0;
+  position: relative;
+  background: $light-color;
+
+  .content {
+    width: 100%;
+    min-height: 80vh;
+    position: relative;
+    border-radius: 0.3rem;
+    background: $white-color;
+
+    .title {
+      width: 100%;
+      display: flex;
+      position: relative;
+      padding: 1rem 2rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba($forest-green, 0.1);
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $forest-green;
+        font-family: "Syne" !important;
+      }
+
+      p {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: rgba($charcoal, 0.4);
+        font-family: "Syne";
+      }
+
+      ul {
+        gap: 1rem;
+        display: flex;
+        align-items: center;
+
+        .refresh {
+          padding: 0.4rem;
+          font-size: 2rem;
+          color: $charcoal;
+          border-radius: 1rem;
+          transition: $transition;
+          background: rgba($forest-green, 0.1);
+
+          span {
+            display: flex;
+          }
+
+          &:hover {
+            cursor: pointer;
+            color: $white-color;
+            background: rgba($golden-brown, 0.7);
+          }
+        }
+
+        .sort {
+          position: relative;
+          display: flex;
+          align-items: center;
+
+          select {
+            appearance: none;
+            display: flex;
+            padding: 0.7rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: $charcoal;
+            border-radius: 0.6rem;
+            font-family: "Syne";
+            box-shadow: 0 0 1px 0 rgba($charcoal, 0.6);
+          }
+        }
+      }
+    }
+
+    .messages-list {
+      width: 100%;
+      position: relative;
+      padding: 1rem;
+
+      .select {
+        padding: 0.6rem 1rem;
+        position: relative;
+        display: flex;
+
+        input {
+          display: none;
+        }
+        label {
+          width: 1rem;
+          height: 1rem;
+          overflow: hidden;
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+          border-radius: 0.4rem;
+          background: $white-color;
+          box-shadow: 0 0 0 1.5px $forest-green;
+          transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+            background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+          &::after {
+            content: "";
+            position: absolute;
+            width: 0.7rem;
+            height: 0.7rem;
+            opacity: 0;
+            top: 0.15rem;
+            left: 0.15rem;
+            border-radius: 2rem;
+            background: $golden-brown;
+            transform: scale(0) rotate(20deg);
+            transition: opacity 2s, transform 0.2s;
+          }
+        }
+
+        input[type="checkbox"] {
+          display: none;
+
+          &:checked + label {
+            background: rgba($forest-green, 0.3);
+            box-shadow: 0 0 0 2.5px rgba($forest-green, 0.3);
+
+            &::after {
+              opacity: 1;
+              border-radius: 0.24rem;
+              transform: scale(1) rotate(0deg);
+              animation: checkmark-bounce 0.3s;
+            }
+          }
+        }
+
+        @keyframes checkmark-bounce {
+          0% {
+            transform: scale(0.5) rotate(-20deg);
+            opacity: 0;
+          }
+          60% {
+            transform: scale(1.2) rotate(-20deg);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(1) rotate(-20deg);
+            opacity: 1;
+          }
+        }
+      }
+
+      .tb {
+        gap: 0.3rem;
+        display: flex;
+        flex-direction: column;
+
+        .th {
+          gap: 1rem;
+          display: flex;
+          align-items: center;
+
+          span {
+            display: flex;
+            align-items: center;
+          }
+
+          .delete,
+          .view {
+            display: flex;
+            padding: 0.4rem;
+            font-size: 1.1rem;
+            border-radius: 0.6rem;
+            transition: $transition;
+            background: rgba($light-color, 0.7);
+            color: rgba($charcoal, 0.8);
+
+            &:hover {
+              color: $golden-brown;
+              cursor: pointer;
+              background: rgba($forest-green, 0.2);
+            }
+          }
+        }
+
+        .message-data {
+          gap: 0.1rem;
+          display: flex;
+          flex-direction: column;
+
+          .td {
+            cursor: pointer;
+            display: grid;
+            padding: 0.3rem;
+            position: relative;
+            align-items: center;
+            border-radius: 0.3rem;
+            transition: $transition;
+            background: rgba($light-color, 0.4);
+            grid-template-columns: 0.6fr 1.4fr 1.4fr 7fr; // Adjust column widths as needed
+
+            .name {
+              display: flex;
+              align-items: center;
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: $black-color;
+            }
+
+            .data {
+              display: flex;
+              width: 100%;
+              overflow: hidden;
+              position: relative;
+
+              p {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display: block;
+                max-width: 100%;
+                font-size: 0.8rem;
+                opacity: 0.6;
+              }
+            }
+
+            .date {
+              display: flex;
+              font-size: 0.7rem;
+              color: $forest-green;
+            }
+
+            &:hover {
+              background: $light-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.view-message-modal {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(0.2rem);
+  background: rgba(0, 0, 0, 0.2);
+
+  .message-cont {
+    width: 80%;
+    height: 100%;
+    max-width: 450px;
+    margin-left: auto;
+    padding: 2rem;
+    padding-top: 6rem;
+    position: relative;
+    overflow-y: scroll;
+    background: $white-color;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    button {
+      width: fit-content;
+      padding: 0.4rem;
+      font-size: 1.2rem;
+      display: flex;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      border-radius: 0.3rem;
+      transition: $transition;
+      background: rgba($light-color, 0.7);
+
+      &:hover {
+        color: $white-color;
+        border-radius: 1rem;
+        background: rgba($charcoal, 0.4);
+      }
+    }
+
+    .div {
+      gap: 0.2rem;
+      display: flex;
+      flex-direction: column;
+
+      span {
+        font-size: 0.9rem;
+        font-family: "Syne";
+        color: rgba($charcoal, 0.6);
+      }
+
+      h3 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: $charcoal;
+      }
+    }
+  }
+}
+
+.admin-overview {
+  width: 100%;
+  position: relative;
+  background: $light-color;
+
+  .content {
+    padding: 2rem 0;
+    position: relative;
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+
+    .hey {
+      gap: 0.3rem;
+      display: flex;
+      flex-direction: column;
+
+      h1 {
+        gap: 0.6rem;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 2rem;
+        color: $forest-green;
+        font-family: "Syne" !important;
+      }
+
+      p {
+        font-size: 1rem;
+        font-weight: 500;
+        font-family: "Syne";
+        color: rgba($charcoal, 0.6);
+      }
+    }
+
+    .numbers {
+      gap: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+
+      .card {
+        flex: 1;
+        padding: 2rem;
+        max-width: 620px;
+        min-width: 200px;
+        border-radius: 0.2rem;
+        background: $white-color;
+        transition: $transition;
+
+        &:hover {
+          cursor: pointer;
+          border-radius: 1rem;
+          position: relative;
+          // background: rgba($forest-green, 0.1);
+          box-shadow: 0 0 1px 0.1rem rgba($forest-green, 0.1);
+        }
+
+        .title {
+          gap: 0.6rem;
+          display: flex;
+          align-items: center;
+          margin-bottom: 1rem;
+
+          span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba($charcoal, 0.8);
+          }
+          svg {
+            font-size: 1.5rem;
+            color: rgba($charcoal, 0.6);
+          }
+        }
+
+        h1 {
+          font-size: 2.4rem;
+          font-weight: bolder;
         }
       }
     }

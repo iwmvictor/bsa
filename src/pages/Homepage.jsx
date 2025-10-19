@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { assets } from "../mock/asset";
 import { Link } from "react-router-dom";
 import { LuArrowRight } from "react-icons/lu";
@@ -10,6 +10,8 @@ import { reviews } from "../mock/reviews";
 import ReviewCard from "../components/ReviewCard";
 import { FaArrowRightLong } from "react-icons/fa6";
 import ImageGallery from "../components/Gallery";
+import { api } from "../api/api";
+import toast from "react-hot-toast";
 
 const calcAvgRating = (reviews) => {
   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
@@ -40,6 +42,23 @@ const servicesList = [
 ];
 
 const Homepage = () => {
+  const [featuredCars, setFeaturedCars] = useState([]);
+
+  useEffect(() => {
+    const fetchFeaturedCars = async () => {
+      try {
+        const allCars = await api.get("/car");
+        const featured = allCars.filter((c) => c.featured === true).slice(0, 3);
+        setFeaturedCars(featured);
+      } catch (error) {
+        toast.error("Can not get featured cars");
+        console.error("Failed to fetch featured cars: ", error);
+      }
+    };
+
+    fetchFeaturedCars();
+  }, []);
+
   return (
     <>
       <div className="homepage">
@@ -112,12 +131,15 @@ const Homepage = () => {
                 </div>
               </div>
               <div className="car-list">
-                {showroom
-                  .filter((car) => car.featured)
-                  .slice(0, 3)
-                  .map((car, index) => (
+                {featuredCars.length === 0 ? (
+                  <>
+                    <p>No featured cars</p>
+                  </>
+                ) : (
+                  featuredCars.map((car, index) => (
                     <CarCard key={index} car={car} />
-                  ))}
+                  ))
+                )}
               </div>
             </div>
           </div>

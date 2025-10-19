@@ -1,12 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { showroom } from "../mock/cars";
 
 import "./../styles/contact.scss";
 import { LuMail, LuMapPin, LuPhone } from "react-icons/lu";
 import { companyInfo, formatPhoneNum } from "../mock/company";
 import { Link } from "react-router-dom";
+import { api } from "../api/api";
+import toast from "react-hot-toast";
 
 const ContactPage = () => {
+  const [form, setForm] = useState({
+    full_name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!form.full_name || !form.phone || !form.email || !form.message) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await api.createMessage(form);
+      toast.success("Message sent");
+      setForm({
+        full_name: "",
+        phone: "",
+        email: "",
+        message: "",
+      });
+    } catch (err) {
+      console.error(err);
+      toast.error("Not sent. Try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="contact-page">
@@ -27,11 +72,10 @@ const ContactPage = () => {
               <div className="contact-card">
                 <div className="div">
                   <h2>Let's get in touch.</h2>
-
                   <div className="phone-call">
                     <div>
                       <h3>Phone Numbers</h3>
-                      <p>To rent one of our vehicles, please use call us.</p>
+                      <p>To rent one of our vehicles, please call us.</p>
                     </div>
                     <ul>
                       <li>
@@ -77,6 +121,7 @@ const ContactPage = () => {
                   </div>
                 </div>
               </div>
+
               <div className="contact-descr">
                 <div className="form">
                   <h2>
@@ -88,24 +133,50 @@ const ContactPage = () => {
                     you every step of the way.
                   </p>
 
-                  <form>
+                  <form onSubmit={handleSubmit}>
                     <div className="input">
-                      <input type="text" placeholder="Full names" />
+                      <input
+                        type="text"
+                        name="full_name"
+                        placeholder="Full names"
+                        value={form.full_name}
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="input">
-                      <input type="tel" placeholder="e.g. 2570 78 1234 567" />
+                      <input
+                        type="tel"
+                        name="phone"
+                        placeholder="e.g. 2570 78 1234 567"
+                        value={form.phone}
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="input">
                       <input
                         type="email"
+                        name="email"
                         placeholder="e.g. booking@brightsafaris.com"
+                        value={form.email}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="message">
-                      <textarea name="" placeholder="Your message"></textarea>
+                      <textarea
+                        name="message"
+                        placeholder="Your message"
+                        value={form.message}
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="form-btn">
-                      <button className="button">Send Message</button>
+                      <button
+                        type="submit"
+                        className="button"
+                        disabled={loading}
+                      >
+                        {loading ? "Sending..." : "Send Message"}
+                      </button>
                     </div>
                   </form>
                 </div>

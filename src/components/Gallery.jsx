@@ -1,21 +1,37 @@
 import React, { useState, useEffect } from "react";
 import FullscreenModal from "./FullScreenModal";
-import galleryImages from "../mock/asset";
+import { getGalleryImages } from "../mock/asset"; // async function
 
-const ImageGallery = ({ images }) => {
+const ImageGallery = () => {
+  const [images, setImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
+  // Load images from backend
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (galleryImages.length > 6) {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % galleryImages.length);
+    const loadImages = async () => {
+      try {
+        const loadedImages = await getGalleryImages();
+        setImages(loadedImages);
+      } catch (error) {
+        console.error("Failed to load gallery images:", error);
       }
+    };
+
+    loadImages();
+  }, []);
+
+  // Auto-advance carousel
+  useEffect(() => {
+    if (images.length <= 6) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [galleryImages]);
+  }, [images]);
 
   const openModal = (index) => {
     setModalImageIndex(index);
@@ -27,32 +43,33 @@ const ImageGallery = ({ images }) => {
   };
 
   const handlePrev = () => {
-    setModalImageIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
+    setModalImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setModalImageIndex((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1));
+    setModalImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   return (
     <div className="gallery">
       <div className="gallery-container">
-        {galleryImages
-          .slice(currentIndex, currentIndex + 6)
-          .map((image, index) => (
-            <div
-              className="gallery-item"
-              key={index}
-              onClick={() => openModal(index)}
-            >
-              <img src={image} loading="lazy" />
-            </div>
-          ))}
+        {images.slice(currentIndex, currentIndex + 6).map((image, index) => (
+          <div
+            className="gallery-item"
+            key={index}
+            onClick={() => openModal(currentIndex + index)}
+            style={{
+              background: "#f5f7fa",
+            }}
+          >
+            <img src={image} alt={`${index + 1}`} loading="lazy" />
+          </div>
+        ))}
       </div>
 
       {isModalOpen && (
         <FullscreenModal
-          images={galleryImages}
+          images={images}
           currentIndex={modalImageIndex}
           onPrev={handlePrev}
           onNext={handleNext}

@@ -131,8 +131,8 @@ const Footer = () => {
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink>
-                          <span></span>
+                        <NavLink to={"/admin"}>
+                          <span>Administration</span>
                         </NavLink>
                       </li>
                     </ul>

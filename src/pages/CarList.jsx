@@ -1,29 +1,31 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { assets } from "../mock/asset";
 import { LuSearch } from "react-icons/lu";
-import { showroom } from "../mock/cars";
 import CarCard from "../components/CarCard";
+import { api } from "../api/api";
+import toast from "react-hot-toast";
 
 import "./../styles/cars.scss";
 
-// Utility to extract unique brands dynamically
 const getUniqueBrands = (cars) => {
   const brands = new Set(cars.map((car) => car.brand));
   return Array.from(brands);
 };
 
-// Get brand counts
-const brandCounts = showroom.reduce((acc, car) => {
-  acc[car.brand] = (acc[car.brand] || 0) + 1;
-  return acc;
-}, {});
-
-// Utility to rank cars based on search relevance
 const getSearchScore = (car, searchTerm) => {
   const term = searchTerm.toLowerCase();
   let score = 0;
 
-  const { brand, model, title, tags, features, overview, carInfo } = car;
+  const {
+    brand,
+    model,
+    title,
+    tags = [],
+    features = [],
+    overview = "",
+    carInfo = {},
+    rental_amount,
+  } = car;
 
   if (brand.toLowerCase().includes(term)) score += 5;
   if (model.toLowerCase().includes(term)) score += 5;
@@ -34,22 +36,22 @@ const getSearchScore = (car, searchTerm) => {
   if (overview.toLowerCase().includes(term)) score += 1;
 
   if (term === "cheap" || term === "affordable") {
-    score += car.rentalAmount < 100000 ? 10 : car.rentalAmount < 200000 ? 5 : 0;
+    score += rental_amount < 100000 ? 10 : rental_amount < 200000 ? 5 : 0;
   }
 
   if (term === "luxury") {
-    score += car.rentalAmount >= 250000 ? 10 : 0;
+    score += rental_amount >= 250000 ? 10 : 0;
   }
 
   if (term === "suv" || term === "jeep") {
-    score += car.carInfo.body.toLowerCase().includes("suv") ? 5 : 0;
+    score += carInfo?.body?.toLowerCase().includes("suv") ? 5 : 0;
   }
 
   return score;
 };
 
 const CarListPage = () => {
-  const [loading, setLoading] = useState(false);
+  const [cars, setCars] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [filters, setFilters] = useState({
@@ -57,9 +59,52 @@ const CarListPage = () => {
     affordable: false,
     seats5Plus: false,
   });
-  const [visibleCount, setVisibleCount] = useState(4); // State for tracking visible cards
+  const [visibleCount, setVisibleCount] = useState(4);
+  const [loading, setLoading] = useState(false);
 
-  const brands = useMemo(() => getUniqueBrands(showroom), []);
+  useEffect(() => {
+    const fetchCars = async () => {
+      setLoading(true);
+      try {
+        const [carsData, bookedData] = await Promise.all([
+          api.get("/car"),
+          api.get("/booked_date"),
+        ]);
+
+        // Merge booked dates into cars
+        const carsWithBookings = carsData.map((car) => {
+          const carBookedDates = bookedData
+            .filter((b) => b.car_id === car.id)
+            .map((b) => ({
+              from: new Date(b.from_date),
+              to: new Date(b.to_date),
+            }));
+
+          return {
+            ...car,
+            bookedDates: carBookedDates,
+          };
+        });
+
+        setCars(carsWithBookings);
+      } catch (error) {
+        toast.error("Failed to load cars or booking data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCars();
+  }, []);
+
+  const brands = useMemo(() => getUniqueBrands(cars), [cars]);
+
+  const brandCounts = useMemo(() => {
+    return cars.reduce((acc, car) => {
+      acc[car.brand] = (acc[car.brand] || 0) + 1;
+      return acc;
+    }, {});
+  }, [cars]);
 
   const handleBrandToggle = (brand) => {
     setSelectedBrands((prev) =>
@@ -72,7 +117,7 @@ const CarListPage = () => {
   };
 
   const filteredCars = useMemo(() => {
-    let results = [...showroom];
+    let results = [...cars];
 
     // Brand filtering
     if (selectedBrands.length > 0) {
@@ -81,15 +126,15 @@ const CarListPage = () => {
 
     // Other filters
     if (filters.luxury) {
-      results = results.filter((car) => car.rentalAmount >= 250000);
+      results = results.filter((car) => car.rental_amount >= 250000);
     }
 
     if (filters.affordable) {
-      results = results.filter((car) => car.rentalAmount <= 100000);
+      results = results.filter((car) => car.rental_amount <= 100000);
     }
 
     if (filters.seats5Plus) {
-      results = results.filter((car) => car.carInfo.seats >= 5);
+      results = results.filter((car) => car?.seats >= 5);
     }
 
     // Search filter
@@ -104,7 +149,7 @@ const CarListPage = () => {
     }
 
     return results;
-  }, [searchTerm, selectedBrands, filters]);
+  }, [searchTerm, selectedBrands, filters, cars]);
 
   const resetFilters = () => {
     setSearchTerm("");
@@ -114,15 +159,15 @@ const CarListPage = () => {
       affordable: false,
       seats5Plus: false,
     });
-    setVisibleCount(4); // Reset the visible count when filters are reset
+    setVisibleCount(4);
   };
 
   const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 4); // Increase the visible count by 4 on "Load More"
+    setVisibleCount((prevCount) => prevCount + 4);
   };
 
   const loadFew = () => {
-    setVisibleCount((prevCount) => prevCount - 4); // Increase the visible count by 4 on "Load More"
+    setVisibleCount((prevCount) => Math.max(prevCount - 4, 4));
   };
 
   return (
@@ -130,7 +175,7 @@ const CarListPage = () => {
       <div className="car-list-page">
         <div className="hero">
           <div className="bg">
-            <img src={assets.heroBg} alt="" loading="lazy"  />
+            <img src={assets.heroBg} alt="" loading="lazy" />
           </div>
           <div className="container">
             <div className="content">
@@ -175,84 +220,38 @@ const CarListPage = () => {
                       />
                       <span className="custom-box"></span>
                       <label htmlFor={`checkbox-${brand}`}>
-                        {brand}{" "}
+                        {brand}
                         <span className="num"> ({brandCounts[brand]})</span>
                       </label>
                     </li>
                   ))}
                 </ul>
-
-                {/* <ul>
-                  <h3>Other</h3>
-                  <li>
-                    <input
-                      id="afford"
-                      type="checkbox"
-                      checked={filters.affordable}
-                      onChange={() => toggleFilter("affordable")}
-                    />
-                    <span className="custom-box"></span>
-                    <label htmlFor="afford">Affordable</label>
-                  </li>
-                  <li>
-                    <input
-                      id="lux"
-                      type="checkbox"
-                      checked={filters.luxury}
-                      onChange={() => toggleFilter("luxury")}
-                    />
-                    <span className="custom-box"></span>
-                    <label htmlFor="lux">Luxury</label>
-                  </li>
-                  <li>
-                    <input
-                      id="5plus"
-                      type="checkbox"
-                      checked={filters.seats5Plus}
-                      onChange={() => toggleFilter("seats5Plus")}
-                    />
-                    <span className="custom-box"></span>
-                    <label htmlFor="5plus">5+ Seats</label>
-                  </li>
-                </ul> */}
               </div>
 
               <div className="main-conts">
-                {/* {searchTerm ||
-                  selectedBrands.length > 0 ||
-                  (Object.values(filters).includes(true) && (
-                    <div className="applied-filters">
-                      <ul>
-                        {searchTerm && <li>Search: {searchTerm}</li>}
-                        {selectedBrands.map((b) => (
-                          <li key={b}>Brand: {b}</li>
-                        ))}
-                        {filters.affordable && <li>Affordable</li>}
-                        {filters.luxury && <li>Luxury</li>}
-                        {filters.seats5Plus && <li>5+ Seats</li>}
-                        <li className="reset" onClick={resetFilters}>
-                          <span>Reset</span>
-                        </li>
-                      </ul>
-                    </div>
-                  ))} */}
-
-                {filteredCars.length > 0 ? (
+                {loading ? (
+                  <div className="loading-section">
+                    <p>Loading cars...</p>
+                  </div>
+                ) : filteredCars.length > 0 ? (
                   <div className="cars-list">
                     {filteredCars.slice(0, visibleCount).map((car, index) => (
                       <CarCard car={car} key={index} />
                     ))}
                   </div>
                 ) : (
-                  <>
-                    <div class="no-car-found">
-                      <div className="div">
-                        <img src={assets.carPlaceholder}  loading="lazy" class="no-car-image" />
-                        <h3>No Cars Matches your Searches</h3>
-                        <p>Try resetting the filters to view more options.</p>
-                      </div>
+                  <div className="no-car-found">
+                    <div className="div">
+                      <img
+                        src={assets.carPlaceholder}
+                        loading="lazy"
+                        className="no-car-image"
+                      />
+                      <h3>No Cars Match Your Search</h3>
+                      <p>Try resetting the filters to view more options.</p>
+                      <button onClick={resetFilters}>Reset Filters</button>
                     </div>
-                  </>
+                  </div>
                 )}
 
                 {filteredCars.length > visibleCount ? (
@@ -263,14 +262,14 @@ const CarListPage = () => {
                         setTimeout(() => {
                           loadMore();
                           setLoading(false);
-                        }, 4000); // 4 seconds delay
+                        }, 1000);
                       }}
                       className={
                         !loading
                           ? "loading-button not-loading"
                           : "loading-button"
                       }
-                      disabled={loading} // Optional: disable button while loading
+                      disabled={loading}
                     >
                       {loading ? (
                         <>
@@ -283,7 +282,7 @@ const CarListPage = () => {
                       )}
                     </button>
                   </div>
-                ) : (
+                ) : filteredCars.length > 4 ? (
                   <div className="load-more">
                     <button
                       onClick={() => {
@@ -291,14 +290,14 @@ const CarListPage = () => {
                         setTimeout(() => {
                           loadFew();
                           setLoading(false);
-                        }, 4000); // 4 seconds delay
+                        }, 1000);
                       }}
                       className={
                         !loading
                           ? "loading-button not-loading"
                           : "loading-button"
                       }
-                      disabled={loading} // Optional: disable button while loading
+                      disabled={loading}
                     >
                       {loading ? (
                         <>
@@ -307,11 +306,11 @@ const CarListPage = () => {
                           <div className="glow-animation"></div>
                         </>
                       ) : (
-                        <span>Load Few</span>
+                        <span>Load Fewer</span>
                       )}
                     </button>
                   </div>
-                )}
+                ) : null}
               </div>
             </div>
           </div>

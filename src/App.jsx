@@ -20,6 +20,8 @@ import DashboardCars from "./admin/Cars";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import NewCarPage from "./admin/NewCar";
 import DashboardBookings from "./admin/Bookings";
+import AdminMessages from "./admin/Messages";
+import AdminSettings from "./admin/Settings";
 
 function App() {
   useEffect(() => {
@@ -62,12 +64,12 @@ function App() {
 
             {/* <Route path="next" element={<CommingSoonPage />} /> */}
 
-            {/* <Route path="*" element={<ErrorPage />} /> */}
+            <Route path="*" element={<ErrorPage />} />
           </Route>
 
           <Route path="/auth/login" element={<LoginPage />} />
           <Route path="/auth" element={<LoginPage />} />
-          <Route path="/auth/register" element={<RegisterPage />} />
+          <Route path="/auth/register-new-admin" element={<RegisterPage />} />
 
           <Route path="admin" element={<ProtectedRoute />}>
             <Route element={<DashboardLayout />}>
@@ -76,6 +78,8 @@ function App() {
               <Route path="cars/:id/edit" element={<NewCarPage />} />
               <Route path="cars/new" element={<NewCarPage />} />
               <Route path="bookings" element={<DashboardBookings />} />
+              <Route path="inbox" element={<AdminMessages />} />
+              <Route path="settings" element={<AdminSettings />} />
             </Route>
           </Route>
         </Routes>

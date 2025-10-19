@@ -33,11 +33,17 @@ export const assets = {
 
 import igallery from "/icons/gallery.svg";
 import { showroom } from "./cars";
+import { api } from "../api/api";
 
 export const ikons = {
   igallery,
   uploadIcon,
 };
 
-const galleryImages = showroom.flatMap((car) => car.gallery);
-export default galleryImages;
+
+export const getGalleryImages = async () => {
+  const cars = await api.getAllCars();
+  return cars.flatMap((car) =>
+    Array.isArray(car.gallery) ? car.gallery : []
+  );
+};

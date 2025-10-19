@@ -83,12 +83,12 @@ const LoginPage = () => {
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        <p className="redirect-text">
+        {/* <p className="redirect-text">
           Don't have an account?{" "}
           <Link to="/auth/register" className="redirect-link">
             Register
           </Link>
-        </p>
+        </p> */}
 
         <p className="redirect-text">
           <Link to="/" className="redirect-link">

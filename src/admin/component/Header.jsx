@@ -10,6 +10,7 @@ import {
 } from "react-icons/io5";
 import { LuX } from "react-icons/lu";
 import { MdPowerOff } from "react-icons/md";
+import { RiMessage3Line } from "react-icons/ri";
 import { SiImessage } from "react-icons/si";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -73,10 +74,8 @@ const DashboardHeader = () => {
         const res = await fetch(`${BASE_URL}/contact_message`);
         if (!res.ok) throw new Error("Failed to fetch messages");
         const data = await res.json();
-        // sort by newest first if not already
-        // assume `created_at` or some timestamp field
+
         const sorted = data.sort((a, b) => {
-          // if messages have created_at as ISO dates
           return new Date(b.created_at) - new Date(a.created_at);
         });
         setMessages(sorted.slice(0, 6)); // only top 6
@@ -180,7 +179,7 @@ const DashboardHeader = () => {
                             <SiImessage />
                           </div>
                           <div className="name">
-                            <h4 className="sender">{msg?.name || "Unknown"}</h4>
+                            <h4 className="sender">{msg?.full_name || "Unknown"}</h4>
                           </div>
                         </div>
                       ))}
@@ -190,10 +189,10 @@ const DashboardHeader = () => {
                   {messages.length > 5 && (
                     <div className="all">
                       <Link
-                        to="/admin/messages"
+                        to="/admin/inbox"
                         onClick={() => setMessageModal(false)}
                       >
-                        View All Messages
+                        View All
                       </Link>
                     </div>
                   )}
@@ -261,6 +260,16 @@ const MenuModal = ({ clickAction }) => {
               </span>
 
               <span>Bookings</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link to={"/admin/inbox"} onClick={clickAction}>
+              <span className="icon">
+                <RiMessage3Line />
+              </span>
+
+              <span>Inbox</span>
             </Link>
           </li>
         </ul>

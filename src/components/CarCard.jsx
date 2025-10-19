@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { generateSlug, getBrandLogo, isBookedToday, priceFormat } from "../mock/cars";
 
@@ -17,7 +16,7 @@ const CarCard = ({ car }) => {
             <div className="txt">
               <h3>{car.title}</h3>
               <p>
-                <span>{car.carInfo.year}</span> •<span>{car.carInfo.transmission}</span>{" "}
+                <span>{car.year}</span> •<span>{car.transmission}</span>{" "}
                 •
                 <span>
                   {isBookedToday(car.bookedDates)
@@ -30,12 +29,12 @@ const CarCard = ({ car }) => {
 
           <div className="div">
             <div className="seats">
-              <span>{car.carInfo.seats} Seats</span>
+              <span>{car?.seats } Seats</span>
             </div>
             <div className="price">
               <h3>
                 <span>RF</span>
-                <span>{priceFormat(car.rentalAmount)}</span>
+                <span>{priceFormat(car?.rental_amount)}</span>
               </h3>
               <span className="duration">/day</span>
             </div>
