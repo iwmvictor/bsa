@@ -10,11 +10,11 @@ export const companyInfo = {
     title: "Kigali, Rwanda",
     road: "KG 512 St.",
     mapLink: "",
-    map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.4970175186195!2d30.091278474967105!3d-1.9545555980277256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca6f46d387275%3A0x7b8b917a7206d1e2!2sKigali%20Convention%20Centre!5e0!3m2!1sen!2sus!4v1759067367901!5m2!1sen!2sus",
-    name: "Kigali Convention Centre",
+    map: "https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d249.21903464123113!2d30.115253570944226!3d-1.9513797128724537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sPharmacies!5e0!3m2!1sen!2srw!4v1763955829816!5m2!1sen!2srw",
+    name: "Bright Safaris Africa - Near Contrôle Technique",
     coordinates: {
-      latitude: -1.9545555980277256,
-      longitude: 30.091278474967105,
+      latitude: -1.9513797128724537,
+      longitude: 30.115253570944226,
     },
   },
 

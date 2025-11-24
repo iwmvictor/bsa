@@ -55,6 +55,10 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         user-select: none;
       }
     }
+
+    @media (max-width: 980px) {
+      min-height: 30vh !important;
+    }
   }
 
   .contacts-sec {
@@ -64,7 +68,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
     background: $white-color;
 
     @media (max-width: 980px) {
-      padding: 3rem 0;
+      padding: 2rem 0;
     }
 
     .content {
@@ -86,7 +90,7 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
           width: 100%;
           gap: 2rem;
           display: flex;
-          padding: 2rem 0;
+          // padding: 2rem 0;
           position: relative;
           flex-direction: column;
 
@@ -158,6 +162,15 @@ $transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
           left: -0.3rem;
           top: 0.3rem;
           background: $golden-brown;
+        }
+
+        @media (max-width: 460px) {
+          &::before {
+            left: 0;
+            top: 0;
+          }
+
+          padding: 2rem;
         }
       }
 

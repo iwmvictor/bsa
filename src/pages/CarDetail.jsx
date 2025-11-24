@@ -14,6 +14,8 @@ import { assets, ikons } from "../mock/asset";
 import { api } from "../api/api";
 
 import "./../styles/cars.scss";
+import Carousel from "../components/Corousel";
+import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 
 const CarDetailPage = () => {
   const { path } = useParams();
@@ -32,12 +34,17 @@ const CarDetailPage = () => {
   const [totalAmount, setTotalAmount] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [corrapseOverview, setCorrapseOverview] = useState(false);
+
+  const toggleCorrapsedOverview = () => {
+    setCorrapseOverview(!corrapseOverview);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // 1. fetch all cars
+
         const carsData = await api.get("/car");
         const foundCar = carsData.find((c) => generateSlug(c) === path);
         if (!foundCar) {
@@ -231,7 +238,7 @@ const CarDetailPage = () => {
             </div>
 
             <div className="images">
-              <div className="img">
+              {/* <div className="img">
                 <img src={car.gallery[0]} loading="lazy" alt="" />
                 <button>
                   <img src={ikons.igallery} loading="lazy" alt="" />
@@ -242,21 +249,54 @@ const CarDetailPage = () => {
                 <div className="img">
                   <img src={car.gallery[1]} loading="lazy" alt="" />
                 </div>
-              )}
+              )} */}
+
+              <Carousel images={car.gallery} />
             </div>
 
             <div className="main-car-contents">
               <div className="main-contents">
+                <div className="feature-list">
+                  <div className="item">
+                    <span className="name">Year:</span>
+                    <span className="val">{car.year}</span>
+                  </div>
+                  <div className="item">
+                    <span className="name">Fuel:</span>
+                    <span className="val">{car.fuel}</span>
+                  </div>
+                  <div className="item">
+                    <span className="name">Transmission:</span>
+                    <span className="val">{car.transmission}</span>
+                  </div>
+                  <div className="item">
+                    <span className="name">Body:</span>
+                    <span className="val">{car.body}</span>
+                  </div>
+                  <div className="item">
+                    <span className="name">Seats:</span>
+                    <span className="val">{car.seats}</span>
+                  </div>
+                </div>
                 <div className="overview">
-                  <h2>Overview</h2>
-                  <div
-                    className="rich-text"
-                    dangerouslySetInnerHTML={{ __html: car.overview }}
-                  ></div>
+                  <div className="over-title" onClick={toggleCorrapsedOverview}>
+                    <div>
+                      <h2>Overview</h2>
+                    </div>
+                    <div className="ovview-btn">
+                      {!corrapseOverview ? <LuChevronDown /> : <LuChevronUp />}
+                    </div>
+                  </div>
+                  {corrapseOverview && (
+                    <div
+                      className="rich-text"
+                      dangerouslySetInnerHTML={{ __html: car.overview }}
+                    ></div>
+                  )}
                 </div>
 
                 <div className="features">
-                  <div className="info-list">
+                  {/* <div className="info-list">
                     {car?.year && (
                       <li>
                         <span className="name">Year</span>
@@ -305,7 +345,7 @@ const CarDetailPage = () => {
                         <span className="val">{car.transmission}</span>
                       </li>
                     )}
-                  </div>
+                  </div> */}
 
                   <div className="list">
                     <h3>Car Features</h3>

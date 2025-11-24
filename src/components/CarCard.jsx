@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
-import { generateSlug, getBrandLogo, isBookedToday, priceFormat } from "../mock/cars";
+import {
+  generateSlug,
+  getBrandLogo,
+  isBookedToday,
+  priceFormat,
+} from "../mock/cars";
 
 const CarCard = ({ car }) => {
   return (
@@ -11,13 +16,12 @@ const CarCard = ({ car }) => {
         <div className="info">
           <div className="brand">
             <div className="img">
-              <img src={getBrandLogo(car.brand)} loading="lazy"  alt="" />
+              <img src={getBrandLogo(car.brand)} loading="lazy" alt="" />
             </div>
             <div className="txt">
               <h3>{car.title}</h3>
               <p>
-                <span>{car.year}</span> •<span>{car.transmission}</span>{" "}
-                •
+                <span>{car.year}</span> •<span>{car.transmission}</span> •
                 <span>
                   {isBookedToday(car.bookedDates)
                     ? "Booked Today"
@@ -29,7 +33,7 @@ const CarCard = ({ car }) => {
 
           <div className="div">
             <div className="seats">
-              <span>{car?.seats } Seats</span>
+              <span>{car?.seats} Seats</span>
             </div>
             <div className="price">
               <h3>
@@ -39,6 +43,9 @@ const CarCard = ({ car }) => {
               <span className="duration">/day</span>
             </div>
           </div>
+          <Link className="check-btn" to={`/car/${generateSlug(car)}`}>
+            <span>Check availability</span>
+          </Link>
         </div>
       </Link>
     </>
