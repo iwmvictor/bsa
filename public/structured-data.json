@@ -1,0 +1,61 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Bright Safaris Africa",
+  "url": "https://www.brightsafarisafrica.com",
+  "sameAs": [
+    "https://www.facebook.com/brightsafaris",
+    "https://www.twitter.com/brightsafaris"
+  ],
+  "logo": "https://www.brightsafarisafrica.com/images/brand/logo.png",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Cars for Rent",
+    "itemListElement": [
+      {
+        "@type": "Product",
+        "name": "Mercedes benz BRABUS 2024",
+        "url": "https://www.brightsafarisafrica.com/car/mercedes-benz-brabus-2024",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "USD",
+          "price": "N/A",
+          "availability": "http://schema.org/InStock"
+        }
+      },
+      {
+        "@type": "Product",
+        "name": "Lexus RX 450 2014",
+        "url": "https://www.brightsafarisafrica.com/car/lexus-rx-450-2014",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "USD",
+          "price": "N/A",
+          "availability": "http://schema.org/InStock"
+        }
+      },
+      {
+        "@type": "Product",
+        "name": "Hyundai Tucson 2016",
+        "url": "https://www.brightsafarisafrica.com/car/hyundai-tucson-2016",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "USD",
+          "price": "N/A",
+          "availability": "http://schema.org/InStock"
+        }
+      },
+      {
+        "@type": "Product",
+        "name": "KIA Sorento 2023",
+        "url": "https://www.brightsafarisafrica.com/car/kia-sorento-2023",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "USD",
+          "price": "N/A",
+          "availability": "http://schema.org/InStock"
+        }
+      }
+    ]
+  }
+}

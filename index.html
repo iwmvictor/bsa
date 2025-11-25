@@ -79,14 +79,13 @@
     />
     <link rel="preload" as="image" href="/images/brand/banner.png" />
 
+    <!-- Structured Data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Service",
+        "@type": "Organization",
         "name": "Bright Safaris Africa",
-        "legalName": "Bright Safaris Africa Ltd",
         "url": "https://www.brightsafarisafrica.com/",
-        "image": "https://www.brightsafarisafrica.com/images/brand/logo.png",
         "logo": "https://www.brightsafarisafrica.com/images/brand/logo.png",
         "email": "info@brightsafarisafrica.com",
         "telephone": ["+250789829879", "+250735666013"],
@@ -103,44 +102,43 @@
           "addressRegion": "Kigali",
           "postalCode": "00000",
           "addressCountry": "RW"
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "4x4 Car Rental",
+        "provider": {
+          "@type": "Organization",
+          "name": "Bright Safaris Africa",
+          "url": "https://www.brightsafarisafrica.com/"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": -1.951335,
-          "longitude": 30.115458
-        },
+        "serviceType": "Car Rental",
         "areaServed": [
           { "@type": "Country", "name": "Rwanda" },
           { "@type": "Country", "name": "Uganda" },
           { "@type": "Country", "name": "Kenya" },
-          { "@type": "Country", "name": "Tanzania" },
-          { "@type": "Continent", "name": "Africa" }
+          { "@type": "Country", "name": "Tanzania" }
         ],
-        "openingHoursSpecification": [
+        "offers": [
           {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              "Sunday"
-            ],
-            "opens": "00:00",
-            "closes": "23:59"
+            "@type": "Offer",
+            "name": "Land Cruiser Rental",
+            "priceCurrency": "USD",
+            "price": "100",
+            "availability": "https://schema.org/InStock"
+          },
+          {
+            "@type": "Offer",
+            "name": "RAV4 Rental",
+            "priceCurrency": "USD",
+            "price": "80",
+            "availability": "https://schema.org/InStock"
           }
-        ],
-        "priceRange": "$$",
-        "serviceArea": "East Africa",
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+250789829879",
-          "contactType": "customer service",
-          "areaServed": "RW",
-          "availableLanguage": ["en"]
-        }
+        ]
       }
     </script>
 
@@ -201,39 +199,6 @@
       }
     </script>
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "4x4 Car Rental",
-        "provider": {
-          "@type": "Service",
-          "name": "Bright Safaris Africa"
-        },
-        "serviceType": "Car Rental",
-        "areaServed": {
-          "@type": "Country",
-          "name": "Rwanda"
-        },
-        "offers": [
-          {
-            "@type": "Offer",
-            "name": "Land Cruiser Rental",
-            "priceCurrency": "USD",
-            "price": "100",
-            "availability": "https://schema.org/InStock"
-          },
-          {
-            "@type": "Offer",
-            "name": "RAV4 Rental",
-            "priceCurrency": "USD",
-            "price": "80",
-            "availability": "https://schema.org/InStock"
-          }
-        ]
-      }
-    </script>
-
     <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
@@ -255,14 +220,14 @@
     <meta name="msvalidate.01" content="8392F8582E72B6D729F17388D4D482AC" />
   </head>
   <body>
-    <noscript
-      ><iframe
+    <noscript>
+      <iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-P8XGRSZD"
         height="0"
         width="0"
         style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
+      ></iframe>
+    </noscript>
 
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

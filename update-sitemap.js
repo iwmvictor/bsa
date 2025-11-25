@@ -1,5 +1,3 @@
-
-
 /**
  * update-sitemap.js
  * 
@@ -12,8 +10,10 @@ import fetch from "node-fetch";
 // ---------------- CONFIG ----------------
 const SITE_URL = "https://www.brightsafarisafrica.com";
 const BASE_URL = process.env.VITE_API_BASE_URL;
-const BING_API_KEY = "YOUR_BING_INDEXNOW_API_KEY"; // get from Bing Webmaster
-const BING_INDEXNOW_URL = "https://ssl.bing.com/webmaster/api.svc/json/SubmitUrlbatch?apikey=" + BING_API_KEY;
+
+// IndexNow key and URL
+const INDEXNOW_KEY = "a1b2c3d4e5f67890abcdef1234567890"; // your key
+const INDEXNOW_URL = "https://www.bing.com/indexnow";
 
 // ---------------- HELPERS ----------------
 function generateSlug(car) {
@@ -85,7 +85,10 @@ function generateStructuredData(cars) {
     "@type": "Organization",
     "name": "Bright Safaris Africa",
     "url": SITE_URL,
-    "sameAs": ["https://www.facebook.com/brightsafaris", "https://www.twitter.com/brightsafaris"],
+    "sameAs": [
+      "https://www.facebook.com/brightsafaris",
+      "https://www.twitter.com/brightsafaris"
+    ],
     "logo": `${SITE_URL}/images/brand/logo.png`,
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
@@ -97,21 +100,29 @@ function generateStructuredData(cars) {
   return JSON.stringify(data, null, 2);
 }
 
-// ---------------- BING INDEXNOW ----------------
-async function submitToBing(urls) {
+// ---------------- SUBMIT TO INDEXNOW ----------------
+async function submitToIndexNow(urls) {
   const payload = {
-    siteUrl: SITE_URL,
+    host: "www.brightsafarisafrica.com",
+    key: INDEXNOW_KEY,
     urlList: urls
   };
 
-  const res = await fetch(BING_INDEXNOW_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
+  try {
+    const res = await fetch(INDEXNOW_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
 
-  const data = await res.json();
-  console.log("Bing IndexNow response:", data);
+    if (res.ok) {
+      console.log("✅ IndexNow submission successful!");
+    } else {
+      console.log("❌ IndexNow submission failed:", res.status, await res.text());
+    }
+  } catch (err) {
+    console.error("❌ IndexNow submission error:", err);
+  }
 }
 
 // ---------------- MAIN ----------------
@@ -129,7 +140,7 @@ async function main() {
     fs.writeFileSync("./public/structured-data.json", structuredData);
     console.log("✅ structured-data.json generated");
 
-    // Submit URLs to Bing IndexNow
+    // Prepare URL list for IndexNow
     const urlList = [
       `${SITE_URL}/`,
       `${SITE_URL}/collection`,
@@ -137,8 +148,8 @@ async function main() {
       ...cars.map(car => `${SITE_URL}/car/${generateSlug(car)}`)
     ];
 
-    await submitToBing(urlList);
-    console.log("✅ URLs submitted to Bing IndexNow");
+    // Submit URLs
+    await submitToIndexNow(urlList);
 
   } catch (err) {
     console.error(err);
