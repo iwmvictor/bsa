@@ -10,10 +10,8 @@ import fetch from "node-fetch";
 // ---------------- CONFIG ----------------
 const SITE_URL = "https://www.brightsafarisafrica.com";
 const BASE_URL = process.env.VITE_API_BASE_URL;
-
-// IndexNow key and URL
-const INDEXNOW_KEY = "a1b2c3d4e5f67890abcdef1234567890"; // your key
-const INDEXNOW_URL = "https://www.bing.com/indexnow";
+const BING_API_KEY = "5fd7cad378d742d789255780064de6f4";
+const BING_INDEXNOW_URL = "https://ssl.bing.com/webmaster/api.svc/json/SubmitUrlbatch?apikey=" + BING_API_KEY;
 
 // ---------------- HELPERS ----------------
 function generateSlug(car) {
@@ -22,8 +20,9 @@ function generateSlug(car) {
     .replace(/\s+/g, "-");
 }
 
-function todayISO() {
-  return new Date().toISOString().split("T")[0];
+function formatDateISO(date) {
+  const d = date ? new Date(date) : new Date();
+  return d.toISOString(); // full ISO 8601 format for <lastmod>
 }
 
 // ---------------- FETCH DATA ----------------
@@ -36,15 +35,15 @@ async function getCars() {
 // ---------------- GENERATE SITEMAP ----------------
 function generateSitemapXML(cars) {
   const urls = [
-    { loc: "/", changefreq: "daily", priority: 1.0 },
-    { loc: "/collection", changefreq: "weekly", priority: 0.9 },
-    { loc: "/contact", changefreq: "monthly", priority: 0.7 },
+    { loc: "/", lastmod: formatDateISO(), changefreq: "daily", priority: 1.0 },
+    { loc: "/collection", lastmod: formatDateISO(), changefreq: "weekly", priority: 0.9 },
+    { loc: "/contact", lastmod: formatDateISO(), changefreq: "monthly", priority: 0.7 },
   ];
 
   cars.forEach(car => {
     urls.push({
       loc: `/car/${generateSlug(car)}`,
-      lastmod: car.updatedAt ? car.updatedAt.split("T")[0] : todayISO(),
+      lastmod: formatDateISO(car.updatedAt),
       changefreq: "weekly",
       priority: 0.8
     });
@@ -85,10 +84,7 @@ function generateStructuredData(cars) {
     "@type": "Organization",
     "name": "Bright Safaris Africa",
     "url": SITE_URL,
-    "sameAs": [
-      "https://www.facebook.com/brightsafaris",
-      "https://www.twitter.com/brightsafaris"
-    ],
+    "sameAs": ["https://www.facebook.com/brightsafaris", "https://www.twitter.com/brightsafaris"],
     "logo": `${SITE_URL}/images/brand/logo.png`,
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
@@ -100,29 +96,21 @@ function generateStructuredData(cars) {
   return JSON.stringify(data, null, 2);
 }
 
-// ---------------- SUBMIT TO INDEXNOW ----------------
-async function submitToIndexNow(urls) {
+// ---------------- SUBMIT TO BING INDEXNOW ----------------
+async function submitToBing(urls) {
   const payload = {
-    host: "www.brightsafarisafrica.com",
-    key: INDEXNOW_KEY,
+    siteUrl: SITE_URL,
     urlList: urls
   };
 
-  try {
-    const res = await fetch(INDEXNOW_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
+  const res = await fetch(BING_INDEXNOW_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
 
-    if (res.ok) {
-      console.log("✅ IndexNow submission successful!");
-    } else {
-      console.log("❌ IndexNow submission failed:", res.status, await res.text());
-    }
-  } catch (err) {
-    console.error("❌ IndexNow submission error:", err);
-  }
+  const data = await res.json();
+  console.log("Bing IndexNow response:", data);
 }
 
 // ---------------- MAIN ----------------
@@ -140,7 +128,7 @@ async function main() {
     fs.writeFileSync("./public/structured-data.json", structuredData);
     console.log("✅ structured-data.json generated");
 
-    // Prepare URL list for IndexNow
+    // Prepare URL list for Bing IndexNow
     const urlList = [
       `${SITE_URL}/`,
       `${SITE_URL}/collection`,
@@ -148,8 +136,8 @@ async function main() {
       ...cars.map(car => `${SITE_URL}/car/${generateSlug(car)}`)
     ];
 
-    // Submit URLs
-    await submitToIndexNow(urlList);
+    await submitToBing(urlList);
+    console.log("✅ URLs submitted to Bing IndexNow");
 
   } catch (err) {
     console.error(err);
